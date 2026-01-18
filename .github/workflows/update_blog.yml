@@ -5,7 +5,7 @@ on:
     branches:
       - main 
   schedule:
-    - cron: '0 0 * * *'  # 매일 자정에 실행 (UTC 기준, 한국시간 오전 9시)
+    - cron: '0 3 * * *'  # (한국시간 오후 12시)
 
 jobs:
   update_blog:
@@ -25,13 +25,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install feedparser gitpython
 
-    - name: Configure Git  # ✅ Git 설정을 먼저 수행
+    - name: Configure Git 
       run: |
         git config --global user.name "S2hyeyunS2"
         git config --global user.email "hhyeyun22@gmail.com"
         git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/S2hyeyunS2/velog.git
 
-    - name: Run script  # ✅ 이제 Python 스크립트 실행
+    - name: Run script 
       run: python scripts/update_blog.py
 
     - name: Pull latest changes (Fix push issue)
